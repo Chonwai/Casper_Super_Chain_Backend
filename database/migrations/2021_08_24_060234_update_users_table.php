@@ -16,7 +16,7 @@ class UpdateUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->uuid('id')->change();
             $table->string('role');
-            $table->timestamp('last_activity');
+            $table->timestamp('last_activity_at');
         });
     }
 
@@ -29,7 +29,7 @@ class UpdateUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
-            $table->dropColumn('last_activity');
+            $table->dropColumn('last_activity_at');
         });
     }
 }
