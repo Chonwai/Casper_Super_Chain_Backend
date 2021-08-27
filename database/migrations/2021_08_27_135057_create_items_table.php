@@ -18,8 +18,8 @@ class CreateItemsTable extends Migration
             $table->uuid('user_id')->index();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 8, 2)->default(0);
-            $table->integer('amount')->default(0);
+            $table->unsignedDecimal('price', 8, 2)->default(0);
+            $table->unsignedInteger('amount')->default(0);
             $table->string('product_code')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
