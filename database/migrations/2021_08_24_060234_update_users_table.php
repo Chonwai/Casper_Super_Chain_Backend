@@ -15,7 +15,7 @@ class UpdateUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->uuid('id')->change();
-            $table->string('role');
+            $table->enum('role', ['supplier', 'customer']);
             $table->timestamp('last_activity_at');
         });
     }
