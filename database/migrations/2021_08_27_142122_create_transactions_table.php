@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->uuid('received_by')->index();
             $table->unsignedDecimal('amount', 8, 2)->default(0);
             $table->string('source')->nullable()->index();
-            $table->enum('status', ['ready', 'paying', 'completed'])->index();
+            $table->enum('status', ['ready', 'paying', 'completed'])->index()->default('ready');
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('paid_by')->references('id')->on('users');

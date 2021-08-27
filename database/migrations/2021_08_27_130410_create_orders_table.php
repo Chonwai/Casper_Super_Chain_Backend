@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->uuid('id')->index()->primary();
             $table->uuid('created_by')->index();
             $table->uuid('ordered_by')->index();
-            $table->enum('status', ['created', 'updating', 'paying', 'delivering', 'finished'])->index();
+            $table->enum('status', ['created', 'updating', 'paying', 'delivering', 'finished'])->index()->default('created');
             $table->string('remark');
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('users');
