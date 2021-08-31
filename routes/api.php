@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Order\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,14 @@ Route::prefix('/v1')->group(function () {
      */
     // Login API
     Route::post('/auth/login', [LoginController::class, 'login']);
+
+    /**
+     * Order API ------------------------------------------------------------
+     *
+     * @api
+     */
+    // All Order API
+    Route::get('/order/all', [OrderController::class, 'index']);
 });
 
 // Route::middleware('auth:api')->prefix('/v1')->group(function () {
