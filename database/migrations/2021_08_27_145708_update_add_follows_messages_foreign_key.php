@@ -27,6 +27,7 @@ class UpdateAddFollowsMessagesForeignKey extends Migration
     public function down()
     {
         Schema::table('follows', function (Blueprint $table) {
+            $table->dropForeign('follows_last_read_message_id_foreign');
             $table->dropColumn('last_read_message_id');
         });
     }
