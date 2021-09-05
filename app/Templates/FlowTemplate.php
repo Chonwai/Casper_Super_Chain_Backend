@@ -13,37 +13,28 @@ abstract class FlowTemplate
 {
     private $validator;
 
+    /**
+     * Register new user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string $resourcesType ('Collection' or 'JsonResource')
+     * @param  string $operation Controller API operation ('index', 'store', 'show', 'update', 'destory')
+     * @return \Illuminate\Http\JsonResponse|Illuminate\Http\Resources\Json\ResourceCollection;
+     */
     final public function takeFlow(Request $request, string $resourcesType, string $operation)
     {
-        $validator = $this->doValidate($request);
+        $validator = $this->doValidate($request, $operation);
         if ($validator->fails()) {
             return $this->doResponse([], $resourcesType, $validator, false);
         } else {
-            $data = $this->doProcess($operation);
+            $data = $this->doProcess($request, $operation);
             return $this->doResponse($data, $resourcesType, $validator, true);
         }
     }
 
-    // final protected function doValidate(Request $request, FormRequest $formRequest)
-    // {
-    //     $validator = Validator::make($request->all(), $formRequest::insertCompanyRules());
+    abstract protected function doValidate(Request $request, string $operation);
 
-    //     if ($validator->fails()) {
-    //         $res = Utils::integradeResponseMessage(ResponseUtils::validatorErrorMessage($validator), false);
-    //         return response()->json($res, 400);
-    //     } else {
-    //         $res = UsersServices::getInstance()->create($request);
-    //         return response()->json($res, 200);
-    //         return Response::success(new OrderCollection($orders));
-    //     }
-    // }
-    abstract protected function doValidate(Request $request);
-
-    abstract protected function doProcess(string $operation);
+    abstract protected function doProcess(Request $request, string $operation);
 
     abstract protected function doResponse($data, string $resourcesType, $validator, bool $validatorStatus);
-
-    // final protected function doResponse(ResourceFactory $factory) {
-    //     return Response::success($factory);
-    // }
 }

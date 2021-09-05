@@ -5,8 +5,7 @@ namespace App\Http\Requests\Auth;
 use App\Rules\RoleRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class RegisterRequest extends FormRequest
+class MarketingRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +25,22 @@ class RegisterRequest extends FormRequest
     public static function rules()
     {
         return [
+            // 
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public static function storeRules()
+    {
+        return [
             'name' => 'required',
             'role' => ['required', new RoleRule],
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'nullable|min:8',
         ];
     }
 }

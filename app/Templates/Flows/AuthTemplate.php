@@ -1,21 +1,34 @@
 <?php
 
-namespace App\Templates;
+namespace App\Templates\Flows;
 
-use App\Http\Requests\Order\OrderRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\Order\Order;
 use App\Http\Resources\Order\OrderCollection;
 use App\Models\Orders;
+use App\Templates\FlowTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
-class OrderFlowTemplate extends FlowTemplate
+class AuthTemplate extends FlowTemplate
 {
-    protected function doValidate(Request $request)
+    protected function doValidate(Request $request, string $operation)
     {
-        $validator = Validator::make($request->all(), OrderRequest::rules());
-        return $validator;
+        switch ($operation) {
+            case 'index':
+                $validator = Validator::make($request->all(), RegisterRequest::rules());
+                return $validator;
+                break;
+            case 'store':
+                $validator = Validator::make($request->all(), RegisterRequest::rules());
+                return $validator;
+                break;
+            default:
+                $validator = Validator::make($request->all(), RegisterRequest::rules());
+                return $validator;
+                break;
+        }
     }
 
     protected function doProcess(string $operation)
@@ -24,6 +37,11 @@ class OrderFlowTemplate extends FlowTemplate
             case 'index':
                 $orders = Orders::all();
                 return $orders;
+                break;
+            case 'store':
+                $orders = Orders::all();
+                return $orders;
+                break;
             default:
                 $orders = Orders::all();
                 return $orders;

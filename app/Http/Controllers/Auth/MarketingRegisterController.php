@@ -1,31 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Order;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\OrderRequest;
-use App\Http\Resources\Order\OrderCollection;
-use App\Http\Resources\ResourceFactory;
-use App\Models\Orders;
-use App\Templates\GodFlowTemplate;
-use App\Templates\Flows\OrderTemplate;
+use App\Templates\Flows\MarketingAuthTemplate;
 use Illuminate\Http\Request;
-use Jiannei\Response\Laravel\Support\Facades\Response;
 
-class OrderController extends Controller
+class MarketingRegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $flow = new OrderTemplate();
-
-        $res = $flow->takeFlow($request, 'Collection', 'index');
-
-        return $res;
+        //
     }
 
     /**
@@ -36,7 +26,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $flow = new MarketingAuthTemplate();
+
+        $res = $flow->takeFlow($request, 'JsonResource', 'store');
+
+        return $res;
     }
 
     /**

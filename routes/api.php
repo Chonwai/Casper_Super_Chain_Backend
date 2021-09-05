@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\MarketingRegisterController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Order\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,9 @@ Route::prefix('/v1')->group(function () {
      */
     // Login API
     Route::post('/auth/login', [LoginController::class, 'login']);
+
+    // Marketing Register API
+    Route::post('/auth/register/marketing', [MarketingRegisterController::class, 'store']);
 
     /**
      * Order API ------------------------------------------------------------

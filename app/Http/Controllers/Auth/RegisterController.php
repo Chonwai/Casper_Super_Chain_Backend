@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Templates\Flows\AuthTemplate;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -12,7 +13,8 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request) {
-        
+    public function register(Request $request)
+    {
+
     }
 }
