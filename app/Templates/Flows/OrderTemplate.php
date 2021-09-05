@@ -41,16 +41,12 @@ class OrderTemplate extends FlowTemplate
         }
     }
 
-    protected function doResponse($data, string $resourcesType, $validator, bool $validatorStatus)
+    protected function doResponse($data, string $resourcesType, $validator)
     {
-        if ($validatorStatus) {
-            if ($resourcesType == 'Collection') {
-                return Response::success(new OrderCollection($data));
-            } elseif ($resourcesType == 'JsonResource') {
-                return Response::success(new Order($data));
-            }
-        } else {
-            return Response::success($validator->errors()->messages());
+        if ($resourcesType == 'Collection') {
+            return Response::success(new OrderCollection($data));
+        } elseif ($resourcesType == 'JsonResource') {
+            return Response::success(new Order($data));
         }
     }
 }

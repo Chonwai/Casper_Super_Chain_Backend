@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Jiannei\Response\Laravel\Support\Facades\Response;
 
 abstract class FlowTemplate
 {
@@ -25,10 +26,10 @@ abstract class FlowTemplate
     {
         $validator = $this->doValidate($request, $operation);
         if ($validator->fails()) {
-            return $this->doResponse([], $resourcesType, $validator, false);
+            return $this->doResponseWithFailValidate($validator);
         } else {
             $data = $this->doProcess($request, $operation);
-            return $this->doResponse($data, $resourcesType, $validator, true);
+            return $this->doResponse($data, $resourcesType, $validator);
         }
     }
 
@@ -36,5 +37,9 @@ abstract class FlowTemplate
 
     abstract protected function doProcess(Request $request, string $operation);
 
-    abstract protected function doResponse($data, string $resourcesType, $validator, bool $validatorStatus);
+    abstract protected function doResponse($data, string $resourcesType, $validator);
+
+    final function doResponseWithFailValidate($validator) {
+        return Response::fail($message='Validation Fail', $code = 422, $errors=$validator->errors()->messages());
+    }
 }
