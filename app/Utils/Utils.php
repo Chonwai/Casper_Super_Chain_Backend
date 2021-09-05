@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use Illuminate\Support\Str;
+
 class Utils
 {
     public static function integradeResponseMessage($message, $status, $code = 9000)
@@ -25,5 +27,11 @@ class Utils
     public static function refreshToken()
     {
         return self::respondWithToken(auth()->refresh());
+    }
+
+    public static function generateUUID()
+    {
+        $id = Str::uuid()->toString();
+        return $id;
     }
 }

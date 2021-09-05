@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\Utils;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,6 +12,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Users extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
+    public $incrementing = false;
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -44,6 +48,7 @@ class Users extends Authenticatable implements JWTSubject
         'password',
         'last_activity_at',
         'email_verified_at',
+        'description',
     ];
 
     /**
@@ -54,6 +59,8 @@ class Users extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'auth_token',
+        'ip_address'
     ];
 
     /**
@@ -66,5 +73,14 @@ class Users extends Authenticatable implements JWTSubject
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'last_activity_at' => 'datetime',
+    ];
+
+    /**
+     * The attributes that should be assign to default value.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        // 
     ];
 }
