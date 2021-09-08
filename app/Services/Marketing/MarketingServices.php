@@ -39,9 +39,8 @@ class MarketingServices
         $user->last_activity_at = Carbon::now();
         $user->auth_token = hash('sha256', Str::random(60));
         $user->ip_address = $request->ip();
-        $user->save();
 
-        if ($user->wasChanged()) {
+        if ($user->save()) {
             $this->sendRegistrationEmail($user);
         }
 

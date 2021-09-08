@@ -32,6 +32,6 @@ class ValidateRegistration extends Mailable
      */
     public function build()
     {
-        return $this->from('edison@853.ai', 'Casper Team')->view('emails/ValidationMail');
+        return $this->from('sales@853.ai', 'Casper Team')->view('emails.ValidationMail');
     }
 }
