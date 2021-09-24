@@ -37,16 +37,16 @@ class MarketingAuthTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-                $orders = Orders::all();
-                return $orders;
+                $data = Orders::all();
+                return $data;
                 break;
             case 'store':
-                $orders = MarketingServices::getInstance()->store($request);
-                return $orders;
+                $data = MarketingServices::getInstance()->store($request);
+                return $data;
                 break;
             default:
-                $orders = Orders::all();
-                return $orders;
+                $data = Orders::all();
+                return $data;
                 break;
         }
     }

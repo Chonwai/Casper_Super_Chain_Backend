@@ -2,10 +2,12 @@
 
 namespace App\Templates\Flows;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\Order\Order;
 use App\Http\Resources\Order\OrderCollection;
 use App\Models\Orders;
+use App\Services\Auth\AuthServices;
 use App\Templates\FlowTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +19,7 @@ class AuthTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-                $validator = Validator::make($request->all(), RegisterRequest::rules());
+                $validator = Validator::make($request->all(), LoginRequest::rules());
                 return $validator;
                 break;
             case 'store':
@@ -35,16 +37,16 @@ class AuthTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-                $orders = Orders::all();
-                return $orders;
+                $data = AuthServices::getInstance()->index($request);
+                return $data;
                 break;
             case 'store':
-                $orders = Orders::all();
-                return $orders;
+                $data = Orders::all();
+                return $data;
                 break;
             default:
-                $orders = Orders::all();
-                return $orders;
+                $data = Orders::all();
+                return $data;
                 break;
         }
     }
