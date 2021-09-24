@@ -4,10 +4,13 @@ namespace App\Services\Auth;
 
 use App\Models\Users;
 use App\Services\MailServices;
+use App\Utils\JWTUtils;
 use App\Utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Jiannei\Response\Laravel\Support\Facades\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthServices
 {
@@ -34,24 +37,28 @@ class AuthServices
     public static function index(Request $request) {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             return ['error' => 'Unauthorized'];
         } else {
-            return $token;
+            $user = JWTAuth::user();
+            $user->token = Utils::respondWithToken($token);
+            return $user;
         }
     }
 
     public function store(Request $request)
     {
         $user = new Users($request->all());
+        $user->password = bcrypt($request->password);
         $user->id = Utils::generateUUID();
-        $user->password = bcrypt(Utils::generateUUID());
         $user->last_activity_at = Carbon::now();
         $user->auth_token = hash('sha256', Str::random(60));
         $user->ip_address = $request->ip();
 
         if ($user->save()) {
             $this->sendRegistrationEmail($user);
+            $token = Utils::respondWithToken(JWTAuth::fromUser($user));
+            $user->token = $token;
         }
 
         return $user;

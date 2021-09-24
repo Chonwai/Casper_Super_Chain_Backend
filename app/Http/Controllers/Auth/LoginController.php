@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Templates\Flows\AuthTemplate;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {

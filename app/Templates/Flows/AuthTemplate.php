@@ -6,6 +6,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\Order\Order;
 use App\Http\Resources\Order\OrderCollection;
+use App\Http\Resources\Users\UsersCollection;
+use App\Http\Resources\Users\UsersResource;
 use App\Models\Orders;
 use App\Services\Auth\AuthServices;
 use App\Templates\FlowTemplate;
@@ -41,7 +43,7 @@ class AuthTemplate extends FlowTemplate
                 return $data;
                 break;
             case 'store':
-                $data = Orders::all();
+                $data = AuthServices::getInstance()->store($request);
                 return $data;
                 break;
             default:
@@ -53,10 +55,14 @@ class AuthTemplate extends FlowTemplate
 
     protected function doResponse($data, string $resourcesType, $validator)
     {
-        if ($resourcesType == 'Collection') {
-            return Response::success(new OrderCollection($data));
-        } elseif ($resourcesType == 'JsonResource') {
-            return Response::success(new Order($data));
+        if (!$data['error']) {
+            if ($resourcesType == 'Collection') {
+                return Response::success(new UsersCollection($data));
+            } elseif ($resourcesType == 'JsonResource') {
+                return Response::success(new UsersResource($data));
+            }
+        } else {
+            return Response::errorUnauthorized('Email or Password incorrect.');
         }
     }
 }

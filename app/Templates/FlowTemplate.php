@@ -2,12 +2,7 @@
 
 namespace App\Templates;
 
-use App\Http\Resources\ResourceFactory;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
 abstract class FlowTemplate

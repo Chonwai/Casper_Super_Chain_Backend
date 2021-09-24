@@ -31,6 +31,9 @@ Route::prefix('/v1')->group(function () {
     // Login API
     Route::post('/auth/login', [LoginController::class, 'login']);
 
+    // Register API
+    Route::post('/auth/register', [RegisterController::class, 'store']);
+
     // Marketing Register API
     Route::post('/auth/register/marketing', [MarketingRegisterController::class, 'store']);
 
