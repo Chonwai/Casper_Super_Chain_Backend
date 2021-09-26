@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <p>{{ $user->email }}: Welcome! Please verify your Casper Super Chain account</p>
     <p>Hi {{ $user->name }},</p>
     <p>You're receiving this email because you are doing validation of your Casper Super Chain account. If you are not sure why you're receiving this, please contact your systems administrator.</p>
     <a href="{{ $validateLink }}">Confirm my account</a>

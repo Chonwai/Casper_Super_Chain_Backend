@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MarketingRegisterController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Follow\FollowController;
 use App\Http\Controllers\Order\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,12 +47,15 @@ Route::prefix('/v1')->group(function () {
     Route::get('/order/all', [OrderController::class, 'index']);
 });
 
-// Route::middleware('auth:api')->prefix('/v1')->group(function () {
-//     /**
-//      * User API ------------------------------------------------------------
-//      *
-//      * @api
-//      */
-//     // Login API
-//     Route::post('/auth/login', [LoginController::class, 'refresh']);
-// });
+Route::group(['middleware' => ['jwt.auth']], function () {
+    // User API
+    Route::prefix('/v1')->group(function () {
+        /**
+         * User API ------------------------------------------------------------
+         *
+         * @api
+         */
+        // Send Follow Request API
+        Route::post('/user/follow', [FollowController::class, 'store']);
+    });
+});

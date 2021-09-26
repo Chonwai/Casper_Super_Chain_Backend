@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Mail\ValidateForgetPassword;
+use App\Mail\NewFollowRequest;
 use App\Mail\ValidateRegistration;
-use App\Utils\Res\ResFactoryUtils;
 use Illuminate\Support\Facades\Mail;
 
 class MailServices
@@ -35,9 +34,9 @@ class MailServices
         Mail::to($user->email)->send($mailValidate->build());
     }
 
-    // public function sendForgetPassword($toAddress, $comfirmCode)
-    // {
-    //     $mailValidate = new ValidateForgetPassword($comfirmCode);
-    //     Mail::to($toAddress)->send($mailValidate->build());
-    // }
+    public function sendNewFollowRequest($follow)
+    {
+        $mailValidate = new NewFollowRequest($follow);
+        Mail::to($follow->addressee->email)->send($mailValidate->build());
+    }
 }
