@@ -62,6 +62,19 @@ class FollowServices
         }
     }
 
+    public function showUserFriend(Request $request) {
+        $follow = Follows::followed()->where(function($query) use ($request) {
+            $query->where('requester_id', $request->id)->orWhere->where('addressee_id', $request->id);
+        })->paginate(15);
+
+        if ($follow) {
+            $follow = ModelRelationsUtils::FollowListRelations($follow);
+            return $follow;
+        } else {
+            return ['error' => 'Get friends list failed!'];
+        }
+    }
+
     public function sendNewRequestEmail($follow)
     {
         MailServices::getInstance()->sendNewFollowRequest($follow);

@@ -44,6 +44,17 @@ class Follows extends Model
     ];
 
     /**
+     * Scope a query to only include followed status.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFollowed($query)
+    {
+        return $query->where('status', 'followed');
+    }
+
+    /**
      * Get the user that owns the request.
      * 
      * @return object

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Follow;
 
 use App\Http\Controllers\Controller;
 use App\Templates\Flows\FollowTemplate;
+use App\Utils\JWTUtils;
+use App\Utils\RequestUtils;
 use Illuminate\Http\Request;
 
 class FollowController extends Controller
@@ -42,6 +44,23 @@ class FollowController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function showUserFriend(Request $request)
+    {
+        RequestUtils::addUserIDFromJWT($request);
+
+        $flow = new FollowTemplate();
+
+        $res = $flow->takeFlow($request, 'Collection', 'showUserFriend');
+
+        return $res;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Follow\FollowAccept;
 use App\Http\Requests\Follow\FollowRequest;
+use App\Http\Requests\Follow\ShowUserFriendListRequest;
 use App\Http\Resources\NormalCollection;
 use App\Http\Resources\NormalResource;
 use App\Models\Follows;
@@ -32,6 +33,10 @@ class FollowTemplate extends FlowTemplate
                 $validator = Validator::make($request->all(), FollowAccept::rules($request));
                 return $validator;
                 break;
+            case 'showUserFriend':
+                $validator = Validator::make($request->all(), ShowUserFriendListRequest::rules($request));
+                return $validator;
+                break;
             default:
                 $validator = Validator::make($request->all(), RegisterRequest::rules());
                 return $validator;
@@ -52,6 +57,10 @@ class FollowTemplate extends FlowTemplate
                 break;
             case 'update':
                 $data = FollowServices::getInstance()->update($request);
+                return $data;
+                break;
+            case 'showUserFriend':
+                $data = FollowServices::getInstance()->showUserFriend($request);
                 return $data;
                 break;
             default:

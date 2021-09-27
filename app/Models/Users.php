@@ -60,7 +60,10 @@ class Users extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
         'auth_token',
-        'ip_address'
+        'ip_address',
+        'is_admin',
+        'is_active',
+        'reset_password_token'
     ];
 
     /**
