@@ -69,6 +69,6 @@ class FollowServices
 
     public function sendAcceptEmail($follow)
     {
-        MailServices::getInstance()->sendNewFollowRequest($follow);
+        MailServices::getInstance()->sendFollowAccepted($follow);
     }
 }

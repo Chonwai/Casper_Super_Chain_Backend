@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Mail\FollowAccepted;
 use App\Mail\NewFollowRequest;
 use App\Mail\ValidateRegistration;
 use Illuminate\Support\Facades\Mail;
@@ -38,5 +39,11 @@ class MailServices
     {
         $mailValidate = new NewFollowRequest($follow);
         Mail::to($follow->addressee->email)->send($mailValidate->build());
+    }
+
+    public function sendFollowAccepted($follow)
+    {
+        $mailValidate = new FollowAccepted($follow);
+        Mail::to($follow->requester->email)->send($mailValidate->build());
     }
 }
