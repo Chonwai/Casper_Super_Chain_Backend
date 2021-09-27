@@ -48,7 +48,6 @@ Route::prefix('/v1')->group(function () {
 });
 
 Route::group(['middleware' => ['jwt.auth']], function () {
-    // User API
     Route::prefix('/v1')->group(function () {
         /**
          * User API ------------------------------------------------------------
@@ -57,5 +56,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          */
         // Send Follow Request API
         Route::post('/user/follow', [FollowController::class, 'store']);
+
+        // Send Follow Request API
+        Route::put('/user/follow/accept', [FollowController::class, 'update']);
     });
 });

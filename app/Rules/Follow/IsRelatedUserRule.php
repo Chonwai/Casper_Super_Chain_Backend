@@ -5,7 +5,7 @@ namespace App\Rules\Follow;
 use App\Utils\JWTUtils;
 use Illuminate\Contracts\Validation\Rule;
 
-class RequesterRule implements Rule
+class IsRelatedUserRule implements Rule
 {
     public $request;
 
@@ -28,7 +28,7 @@ class RequesterRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($this->request['addressee_id'] !== $value) {
+        if ($value === JWTUtils::getUserID()) {
             return true;
         } else {
             return false;
@@ -42,6 +42,6 @@ class RequesterRule implements Rule
      */
     public function message()
     {
-        return 'The follow request wrong.';
+        return 'The follow accept wrong.';
     }
 }

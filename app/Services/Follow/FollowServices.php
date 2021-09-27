@@ -49,7 +49,25 @@ class FollowServices
         }
     }
 
+    public function update(Request $request) {
+        $follow = Follows::where('requester_id', $request->requester_id)->where('addressee_id', $request->addressee_id)->where('status', 'requesting')->first();
+        $follow->status = 'followed';
+
+        if ($follow->save()) {
+            $follow = ModelRelationsUtils::FollowRelations($follow);
+            $this->sendAcceptEmail($follow);
+            return $follow;
+        } else {
+            return ['error' => 'Follow accept failed!'];
+        }
+    }
+
     public function sendNewRequestEmail($follow)
+    {
+        MailServices::getInstance()->sendNewFollowRequest($follow);
+    }
+
+    public function sendAcceptEmail($follow)
     {
         MailServices::getInstance()->sendNewFollowRequest($follow);
     }

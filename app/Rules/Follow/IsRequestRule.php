@@ -2,10 +2,10 @@
 
 namespace App\Rules\Follow;
 
-use App\Utils\JWTUtils;
+use App\Models\Follows;
 use Illuminate\Contracts\Validation\Rule;
 
-class RequesterRule implements Rule
+class IsRequestRule implements Rule
 {
     public $request;
 
@@ -28,7 +28,8 @@ class RequesterRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($this->request['addressee_id'] !== $value) {
+        $status1 = Follows::where('id', $value)->where('status', 'requesting')->count();
+        if ($status1) {
             return true;
         } else {
             return false;
@@ -42,6 +43,6 @@ class RequesterRule implements Rule
      */
     public function message()
     {
-        return 'The follow request wrong.';
+        return 'You are the friend now.';
     }
 }

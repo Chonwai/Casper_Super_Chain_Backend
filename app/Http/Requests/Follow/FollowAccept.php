@@ -5,9 +5,11 @@ namespace App\Http\Requests\Follow;
 use App\Rules\Follow\AddresseeRule;
 use App\Rules\Follow\IsFollowedRule;
 use App\Rules\Follow\IsRelatedUserRule;
+use App\Rules\Follow\IsRequestRule;
+use App\Rules\Follow\RequesterRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FollowRequest extends FormRequest
+class FollowAccept extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +29,9 @@ class FollowRequest extends FormRequest
     public static function rules($request)
     {
         return [
-            'requester_id' => ['required', 'exists:users,id', new IsRelatedUserRule($request), new IsFollowedRule($request)],
-            'addressee_id' => ['required', 'exists:users,id', new AddresseeRule($request)],
+            'id' => ['required', 'exists:follows,id', new IsRequestRule($request)],
+            'requester_id' => ['required', 'exists:users,id', new RequesterRule($request)],
+            'addressee_id' => ['required', 'exists:users,id', new IsRelatedUserRule($request)],
         ];
     }
 }

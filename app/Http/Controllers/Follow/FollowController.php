@@ -48,12 +48,15 @@ class FollowController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $flow = new FollowTemplate();
+
+        $res = $flow->takeFlow($request, 'JsonResource', 'update');
+
+        return $res;
     }
 
     /**
