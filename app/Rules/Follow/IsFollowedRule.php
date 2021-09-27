@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Rules;
+namespace App\Rules\Follow;
 
+use App\Models\Follows;
 use Illuminate\Contracts\Validation\Rule;
 
-class FollowUserRule implements Rule
+class IsFollowedRule implements Rule
 {
     private $request;
 
@@ -27,10 +28,12 @@ class FollowUserRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($this->request['requester_id'] !== $value) {
-            return true;
-        } else {
+        $status1 = Follows::where('requester_id', $this->request->requester_id)->where('addressee_id', $this->request->addressee_id)->count();
+        $status2 = Follows::where('requester_id', $this->request->addressee_id)->where('addressee_id', $this->request->requester_id)->count();
+        if ($status1 || $status2) {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -41,6 +44,6 @@ class FollowUserRule implements Rule
      */
     public function message()
     {
-        return 'The follow request fail.';
+        return 'You cannot send follow request again.';
     }
 }

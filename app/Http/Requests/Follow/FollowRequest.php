@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Follow;
 
-use App\Rules\FollowRequestStatusRule;
-use App\Rules\FollowUserRule;
+use App\Rules\Follow\AddresseeRule;
+use App\Rules\Follow\IsFollowedRule;
+use App\Rules\Follow\RequesterRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FollowRequest extends FormRequest
@@ -26,8 +27,8 @@ class FollowRequest extends FormRequest
     public static function rules($request)
     {
         return [
-            'requester_id' => 'required|exists:users,id',
-            'addressee_id' => ['required', 'exists:users,id', new FollowUserRule($request)],
+            'requester_id' => ['required', 'exists:users,id', new RequesterRule($request), new IsFollowedRule($request)],
+            'addressee_id' => ['required', 'exists:users,id', new AddresseeRule($request)],
         ];
     }
 }

@@ -26,6 +26,11 @@ class JWTUtils
         return JWTAuth::getPayload($token)['iss'];
     }
 
+    /**
+     * Return the User ID.
+     *
+     * @return string
+     */
     public static function getUserID()
     {
         return JWTAuth::getPayload(JWTAuth::getToken())['sub'];

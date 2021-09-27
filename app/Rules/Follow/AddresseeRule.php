@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Rules;
+namespace App\Rules\Follow;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class FollowRequestStatusRule implements Rule
+class AddresseeRule implements Rule
 {
+    private $request;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($request)
     {
-        //
+        $this->request = $request;
     }
 
     /**
@@ -25,7 +27,7 @@ class FollowRequestStatusRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value === 'requesting') {
+        if ($this->request['requester_id'] !== $value) {
             return true;
         } else {
             return false;
@@ -39,6 +41,6 @@ class FollowRequestStatusRule implements Rule
      */
     public function message()
     {
-        return 'The follow status is wrong.';
+        return 'You cannot send follow request to yourself.';
     }
 }
