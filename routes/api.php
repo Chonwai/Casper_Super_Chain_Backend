@@ -57,6 +57,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          */
         // Get the Friends List
         Route::get('/user/follow', [FollowController::class, 'showUserFriend']);
+    
+        // Get the Items List
+        Route::get('/user/items', [ItemController::class, 'showSelfItem']);
 
         /**
          * Follow API ------------------------------------------------------------

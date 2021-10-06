@@ -30,8 +30,12 @@ class ItemTemplate extends FlowTemplate
             // $validator = Validator::make($request->all(), FollowAccept::rules($request));
             // return $validator;
             // break;
+            case 'showSelfItem':
+                $validator = Validator::make($request->all(), []);
+                return $validator;
+                break;
             default:
-                $validator = Validator::make($request->all(), '');
+                $validator = Validator::make($request->all(), []);
                 return $validator;
                 break;
         }
@@ -50,6 +54,10 @@ class ItemTemplate extends FlowTemplate
                 break;
             case 'update':
                 $data = FollowServices::getInstance()->update($request);
+                return $data;
+                break;
+            case 'showSelfItem':
+                $data = ItemServices::getInstance()->showSelfItem($request);
                 return $data;
                 break;
             default:

@@ -62,4 +62,15 @@ class ItemServices
             return ['error' => 'Follow accept failed!'];
         }
     }
+
+    public function showSelfItem(Request $request) {
+        $item = Items::where('provider_id', $request->id)->paginate(15);
+
+        if ($item) {
+            $item = ModelRelationsUtils::ItemListRelations($item);
+            return $item;
+        } else {
+            return ['error' => 'Get self items failed!'];
+        }
+    }
 }

@@ -25,4 +25,12 @@ class ModelRelationsUtils
         $model->provider = $model->provider;
         return $model;
     }
+
+    public static function ItemListRelations($model)
+    {
+        foreach ($model as $object) {
+            $object->provider = $object->provider;
+        }
+        return $model;
+    }
 }

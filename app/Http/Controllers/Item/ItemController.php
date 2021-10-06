@@ -45,6 +45,20 @@ class ItemController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSelfItem(Request $request)
+    {
+        RequestUtils::addUserIDFromJWT($request);
+        $flow = new ItemTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'showSelfItem');
+        return $res;
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
