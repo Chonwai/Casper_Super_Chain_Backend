@@ -67,5 +67,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Send Follow Request API
         Route::put('/user/follow/accept', [FollowController::class, 'update']);
+
+        // Get the Follow Request List
+        Route::get('/user/follow/request', [FollowController::class, 'showFollowRequest']);
     });
 });

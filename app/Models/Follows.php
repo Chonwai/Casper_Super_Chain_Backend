@@ -44,6 +44,17 @@ class Follows extends Model
     ];
 
     /**
+     * Scope a query to only include requesting status.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRequesting($query)
+    {
+        return $query->where('status', 'requesting');
+    }
+
+    /**
      * Scope a query to only include followed status.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
