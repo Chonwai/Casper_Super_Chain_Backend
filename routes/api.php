@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MarketingRegisterController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Follow\FollowController;
+use App\Http\Controllers\Item\ItemController;
 use App\Http\Controllers\Order\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -73,5 +74,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Get the Last 7 Days Follow Accepted List
         Route::get('/user/follow/accept', [FollowController::class, 'showFollowAccepted']);
+
+        /**
+         * Item API ------------------------------------------------------------
+         *
+         * @api
+         */
+        // Add New Item
+        Route::post('/item', [ItemController::class, 'store']);
     });
 });

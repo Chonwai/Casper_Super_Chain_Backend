@@ -95,7 +95,7 @@ class FollowTemplate extends FlowTemplate
                 return Response::success(new NormalResource($data));
             }
         } else {
-            return Response::errorUnauthorized('Email or Password incorrect.');
+            return Response::errorBadRequest($data['error']);
         }
     }
 }

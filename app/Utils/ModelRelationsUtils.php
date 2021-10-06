@@ -19,4 +19,10 @@ class ModelRelationsUtils
         }
         return $model;
     }
+
+    public static function ItemRelations($model)
+    {
+        $model->provider = $model->provider;
+        return $model;
+    }
 }

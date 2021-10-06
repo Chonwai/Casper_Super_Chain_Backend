@@ -29,9 +29,7 @@ class FollowController extends Controller
     public function store(Request $request)
     {
         $flow = new FollowTemplate();
-
         $res = $flow->takeFlow($request, 'JsonResource', 'store');
-
         return $res;
     }
 
@@ -55,11 +53,8 @@ class FollowController extends Controller
     public function showUserFriend(Request $request)
     {
         RequestUtils::addUserIDFromJWT($request);
-
         $flow = new FollowTemplate();
-
         $res = $flow->takeFlow($request, 'Collection', 'showUserFriend');
-
         return $res;
     }
 
@@ -72,11 +67,8 @@ class FollowController extends Controller
     public function showFollowRequest(Request $request)
     {
         RequestUtils::addUserIDFromJWT($request);
-
         $flow = new FollowTemplate();
-
         $res = $flow->takeFlow($request, 'Collection', 'showFollowRequest');
-
         return $res;
     }
 
@@ -89,11 +81,8 @@ class FollowController extends Controller
     public function showFollowAccepted(Request $request)
     {
         RequestUtils::addUserIDFromJWT($request);
-
         $flow = new FollowTemplate();
-
         $res = $flow->takeFlow($request, 'Collection', 'showFollowAccepted');
-
         return $res;
     }
 
@@ -106,9 +95,7 @@ class FollowController extends Controller
     public function update(Request $request)
     {
         $flow = new FollowTemplate();
-
         $res = $flow->takeFlow($request, 'JsonResource', 'update');
-
         return $res;
     }
 
