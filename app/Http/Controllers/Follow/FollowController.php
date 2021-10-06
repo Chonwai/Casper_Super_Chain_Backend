@@ -81,6 +81,23 @@ class FollowController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function showFollowAccepted(Request $request)
+    {
+        RequestUtils::addUserIDFromJWT($request);
+
+        $flow = new FollowTemplate();
+
+        $res = $flow->takeFlow($request, 'Collection', 'showFollowAccepted');
+
+        return $res;
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -6,6 +6,7 @@ use App\Models\Follows;
 use App\Services\MailServices;
 use App\Utils\ModelRelationsUtils;
 use App\Utils\Utils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FollowServices
@@ -83,6 +84,17 @@ class FollowServices
             return $follow;
         } else {
             return ['error' => 'Get friends request failed!'];
+        }
+    }
+
+    public function showFollowAccepted(Request $request) {
+        $follow = Follows::followed()->where('addressee_id', $request->id)->where('created_at', '>=', Carbon::now()->subDays(7)->toDateTimeString())->paginate(15);
+
+        if ($follow) {
+            $follow = ModelRelationsUtils::FollowListRelations($follow);
+            return $follow;
+        } else {
+            return ['error' => 'Get friends accepted failed!'];
         }
     }
 

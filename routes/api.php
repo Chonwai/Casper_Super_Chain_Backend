@@ -70,5 +70,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Get the Follow Request List
         Route::get('/user/follow/request', [FollowController::class, 'showFollowRequest']);
+
+        // Get the Last 7 Days Follow Accepted List
+        Route::get('/user/follow/accept', [FollowController::class, 'showFollowAccepted']);
     });
 });

@@ -41,6 +41,10 @@ class FollowTemplate extends FlowTemplate
                 $validator = Validator::make($request->all(), ShowUserFriendListRequest::rules($request));
                 return $validator;
                 break;
+            case 'showFollowAccepted':
+                $validator = Validator::make($request->all(), ShowUserFriendListRequest::rules($request));
+                return $validator;
+                break;
             default:
                 $validator = Validator::make($request->all(), RegisterRequest::rules());
                 return $validator;
@@ -69,6 +73,10 @@ class FollowTemplate extends FlowTemplate
                 break;
             case 'showFollowRequest':
                 $data = FollowServices::getInstance()->showFollowRequest($request);
+                return $data;
+                break;
+            case 'showFollowAccepted':
+                $data = FollowServices::getInstance()->showFollowAccepted($request);
                 return $data;
                 break;
             default:
