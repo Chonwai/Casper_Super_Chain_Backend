@@ -39,9 +39,12 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        RequestUtils::addProviderIDFromJWT($request);
+        $flow = new ItemTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'show');
+        return $res;
     }
 
     /**
@@ -54,7 +57,7 @@ class ItemController extends Controller
     {
         RequestUtils::addUserIDFromJWT($request);
         $flow = new ItemTemplate();
-        $res = $flow->takeFlow($request, 'JsonResource', 'showSelfItem');
+        $res = $flow->takeFlow($request, 'Collection', 'showSelfItem');
         return $res;
     }
 

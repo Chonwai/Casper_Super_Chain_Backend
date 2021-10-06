@@ -4,10 +4,8 @@ namespace App\Services\Item;
 
 use App\Models\Follows;
 use App\Models\Items;
-use App\Services\MailServices;
 use App\Utils\ModelRelationsUtils;
 use App\Utils\Utils;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ItemServices
@@ -32,8 +30,9 @@ class ItemServices
         return self::$_instance;
     }
 
-    public function index() {
-        // 
+    public function index()
+    {
+        //
     }
 
     public function store(Request $request)
@@ -50,7 +49,8 @@ class ItemServices
         }
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $follow = Follows::where('requester_id', $request->requester_id)->where('addressee_id', $request->addressee_id)->where('status', 'requesting')->first();
         $follow->status = 'followed';
 
@@ -63,7 +63,21 @@ class ItemServices
         }
     }
 
-    public function showSelfItem(Request $request) {
+    public function show(Request $request)
+    {
+        $item = Items::where('id', $request->id)->where('provider_id', $request->provider_id)->first();
+
+
+        if ($item) {
+            $item = ModelRelationsUtils::ItemRelations($item);
+            return $item;
+        } else {
+            return ['error' => 'Get the specific item failed!'];
+        }
+    }
+
+    public function showSelfItem(Request $request)
+    {
         $item = Items::where('provider_id', $request->id)->paginate(15);
 
         if ($item) {

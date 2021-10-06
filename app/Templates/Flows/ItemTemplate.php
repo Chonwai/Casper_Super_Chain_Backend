@@ -3,6 +3,7 @@
 namespace App\Templates\Flows;
 
 use App\Http\Requests\Item\NewItemRequest;
+use App\Http\Requests\Item\ShowSpecificItemRequest;
 use App\Http\Resources\NormalCollection;
 use App\Http\Resources\NormalResource;
 use App\Models\Follows;
@@ -23,13 +24,17 @@ class ItemTemplate extends FlowTemplate
             // return $validator;
             // break;
             case 'store':
-                $validator = Validator::make($request->all(), NewItemRequest::rules($request));
+                $validator = Validator::make($request->all(), NewItemRequest::rules());
                 return $validator;
                 break;
             case 'update':
-            // $validator = Validator::make($request->all(), FollowAccept::rules($request));
-            // return $validator;
-            // break;
+                $validator = Validator::make($request->all(), []);
+                return $validator;
+                break;
+            case 'show':
+                $validator = Validator::make(array_merge($request->all(), ['id' => $request->id]), ShowSpecificItemRequest::rules());
+                return $validator;
+                break;
             case 'showSelfItem':
                 $validator = Validator::make($request->all(), []);
                 return $validator;
@@ -54,6 +59,10 @@ class ItemTemplate extends FlowTemplate
                 break;
             case 'update':
                 $data = FollowServices::getInstance()->update($request);
+                return $data;
+                break;
+            case 'show':
+                $data = ItemServices::getInstance()->show($request);
                 return $data;
                 break;
             case 'showSelfItem':

@@ -85,5 +85,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          */
         // Add New Item
         Route::post('/item', [ItemController::class, 'store']);
+
+        // Get the Specific Item
+        Route::get('/item/{id}', [ItemController::class, 'show']);
     });
 });
