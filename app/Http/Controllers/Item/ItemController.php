@@ -70,7 +70,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // RequestUtils::addProviderIDFromJWT($request);
         $flow = new ItemTemplate();
         $res = $flow->takeFlow($request, 'JsonResource', 'update');
         return $res;
@@ -79,11 +78,14 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $flow = new ItemTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'destroy');
+        return $res;
     }
 }

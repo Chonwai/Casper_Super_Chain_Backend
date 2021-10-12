@@ -88,4 +88,15 @@ class ItemServices
             return ['error' => 'Get self items failed!'];
         }
     }
+
+    public function destroy(Request $request) {
+        $item = Items::where('id', $request->id)->where('provider_id', JWTUtils::getUserID())->first();
+
+        try {
+            $item->delete();
+            return $item;
+        } catch (\Throwable $th) {
+            return ['error' => 'Item delete failed!'];
+        }
+    }
 }

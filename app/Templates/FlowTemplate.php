@@ -4,6 +4,7 @@ namespace App\Templates;
 
 use Illuminate\Http\Request;
 use Jiannei\Response\Laravel\Support\Facades\Response;
+use Nette\Utils\Strings;
 
 abstract class FlowTemplate
 {

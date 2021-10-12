@@ -91,5 +91,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Update the Item
         Route::put('/item/{id}', [ItemController::class, 'update']);
+
+        // Delete the Item
+        Route::delete('/item/{id}', [ItemController::class, 'destroy']);
     });
 });

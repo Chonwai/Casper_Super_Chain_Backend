@@ -2,6 +2,7 @@
 
 namespace App\Templates\Flows;
 
+use App\Http\Requests\Item\DeleteItemRequest;
 use App\Http\Requests\Item\NewItemRequest;
 use App\Http\Requests\Item\ShowSpecificItemRequest;
 use App\Http\Requests\Item\UpdateItemRequest;
@@ -11,7 +12,6 @@ use App\Models\Items;
 use App\Services\Item\ItemServices;
 use App\Templates\FlowTemplate;
 use App\Utils\JWTUtils;
-use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jiannei\Response\Laravel\Support\Facades\Response;
@@ -22,9 +22,9 @@ class ItemTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-            // $validator = Validator::make($request->all(), LoginRequest::rules());
-            // return $validator;
-            // break;
+                $validator = Validator::make($request->all(), []);
+                return $validator;
+                break;
             case 'store':
                 $validator = Validator::make($request->all(), NewItemRequest::rules());
                 return $validator;
@@ -41,6 +41,10 @@ class ItemTemplate extends FlowTemplate
                 $validator = Validator::make($request->all(), []);
                 return $validator;
                 break;
+            case 'destroy':
+                $validator = Validator::make(['id' => $request->id, 'provider_id' => JWTUtils::getUserID()], DeleteItemRequest::rules());
+                return $validator;
+                break;
             default:
                 $validator = Validator::make($request->all(), []);
                 return $validator;
@@ -52,9 +56,9 @@ class ItemTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-            // $data = FollowServices::getInstance()->index($request);
-            // return $data;
-            // break;
+                $data = Items::all();
+                return $data;
+                break;
             case 'store':
                 $data = ItemServices::getInstance()->store($request);
                 return $data;
@@ -69,6 +73,10 @@ class ItemTemplate extends FlowTemplate
                 break;
             case 'showSelfItem':
                 $data = ItemServices::getInstance()->showSelfItem($request);
+                return $data;
+                break;
+            case 'destroy':
+                $data = ItemServices::getInstance()->destroy($request);
                 return $data;
                 break;
             default:
