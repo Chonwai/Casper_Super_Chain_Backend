@@ -2,9 +2,10 @@
 
 namespace App\Services\Item;
 
-use App\Models\Follows;
 use App\Models\Items;
+use App\Utils\JWTUtils;
 use App\Utils\ModelRelationsUtils;
+use App\Utils\ModelUpdateUtils;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 
@@ -41,25 +42,26 @@ class ItemServices
         $item->id = Utils::generateUUID();
         $item->provider_id = $request->id;
 
-        if ($item->save()) {
+        try {
+            $item->save();
             $item = ModelRelationsUtils::ItemRelations($item);
             return $item;
-        } else {
+        } catch (\Throwable $th) {
             return ['error' => 'Add new item failed!'];
         }
     }
 
     public function update(Request $request)
     {
-        $follow = Follows::where('requester_id', $request->requester_id)->where('addressee_id', $request->addressee_id)->where('status', 'requesting')->first();
-        $follow->status = 'followed';
+        $item = Items::where('id', $request->id)->where('provider_id', JWTUtils::getUserID())->first();
+        $item = ModelUpdateUtils::ItemListRelations($item, $request);
 
-        if ($follow->save()) {
-            $follow = ModelRelationsUtils::ItemRelations($follow);
-            // $this->sendAcceptEmail($follow);
-            return $follow;
-        } else {
-            return ['error' => 'Follow accept failed!'];
+        try {
+            $item->save();
+            $item = ModelRelationsUtils::ItemRelations($item);
+            return $item;
+        } catch (\Throwable $th) {
+            return ['error' => 'Item update failed!'];
         }
     }
 
@@ -67,11 +69,10 @@ class ItemServices
     {
         $item = Items::where('id', $request->id)->where('provider_id', $request->provider_id)->first();
 
-
-        if ($item) {
+        try {
             $item = ModelRelationsUtils::ItemRelations($item);
             return $item;
-        } else {
+        } catch (\Throwable $th) {
             return ['error' => 'Get the specific item failed!'];
         }
     }

@@ -4,12 +4,14 @@ namespace App\Templates\Flows;
 
 use App\Http\Requests\Item\NewItemRequest;
 use App\Http\Requests\Item\ShowSpecificItemRequest;
+use App\Http\Requests\Item\UpdateItemRequest;
 use App\Http\Resources\NormalCollection;
 use App\Http\Resources\NormalResource;
-use App\Models\Follows;
-use App\Services\Follow\FollowServices;
+use App\Models\Items;
 use App\Services\Item\ItemServices;
 use App\Templates\FlowTemplate;
+use App\Utils\JWTUtils;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jiannei\Response\Laravel\Support\Facades\Response;
@@ -28,7 +30,7 @@ class ItemTemplate extends FlowTemplate
                 return $validator;
                 break;
             case 'update':
-                $validator = Validator::make($request->all(), []);
+                $validator = Validator::make(array_merge($request->all(), ['id' => $request->id, 'provider_id' => JWTUtils::getUserID()]), UpdateItemRequest::rules());
                 return $validator;
                 break;
             case 'show':
@@ -50,15 +52,15 @@ class ItemTemplate extends FlowTemplate
     {
         switch ($operation) {
             case 'index':
-                $data = FollowServices::getInstance()->index($request);
-                return $data;
-                break;
+            // $data = FollowServices::getInstance()->index($request);
+            // return $data;
+            // break;
             case 'store':
                 $data = ItemServices::getInstance()->store($request);
                 return $data;
                 break;
             case 'update':
-                $data = FollowServices::getInstance()->update($request);
+                $data = ItemServices::getInstance()->update($request);
                 return $data;
                 break;
             case 'show':
@@ -70,7 +72,7 @@ class ItemTemplate extends FlowTemplate
                 return $data;
                 break;
             default:
-                $data = Follows::all();
+                $data = Items::all();
                 return $data;
                 break;
         }

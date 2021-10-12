@@ -70,7 +70,10 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // RequestUtils::addProviderIDFromJWT($request);
+        $flow = new ItemTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'update');
+        return $res;
     }
 
     /**
