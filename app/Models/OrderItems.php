@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Orders extends Model
+class OrderItems extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,9 @@ class Orders extends Model
      */
     protected $fillable = [
         'id',
-        'created_by',
-        'ordered_by',
-        'status',
-        'remark',
+        'order_id',
+        'item_id',
+        'quantity',
     ];
 
     /**
@@ -48,9 +47,9 @@ class Orders extends Model
      * 
      * @return object
      */
-    public function creator()
+    public function order()
     {
-        return $this->belongsTo(Users::class, 'created_by', 'id');
+        return $this->belongsTo(Orders::class, 'order_id', 'id');
     }
 
     /**
@@ -58,18 +57,8 @@ class Orders extends Model
      * 
      * @return object
      */
-    public function orderer()
+    public function item()
     {
-        return $this->belongsTo(Users::class, 'ordered_by', 'id');
-    }
-
-    /**
-     * Get the user that owns the request.
-     * 
-     * @return object
-     */
-    public function items()
-    {
-        return $this->hasMany(OrderItems::class, 'order_id', 'id');
+        return $this->hasOne(Items::class, 'item_id', 'id');
     }
 }

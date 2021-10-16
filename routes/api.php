@@ -94,5 +94,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Delete the Item
         Route::delete('/item/{id}', [ItemController::class, 'destroy']);
+
+        /**
+         * Order API ------------------------------------------------------------
+         *
+         * @api
+         */
+        // Add New Order
+        Route::post('/order', [OrderController::class, 'store']);
     });
 });

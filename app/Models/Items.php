@@ -22,7 +22,9 @@ class Items extends Model
         'name',
         'description',
         'price',
-        'amount',
+        'storage_quantity',
+        'available_quantity',
+        'reserved_quantity',
         'product_code',
     ];
 
@@ -63,7 +65,7 @@ class Items extends Model
      */
     public function scopeHasStock($query)
     {
-        return $query->where('amount', '>=', 0);
+        return $query->where('storage_quantity', '>=', 0);
     }
 
     /**
@@ -74,6 +76,28 @@ class Items extends Model
      */
     public function scopeNoStock($query)
     {
-        return $query->where('amount', '==', 0);
+        return $query->where('storage_quantity', '==', 0);
+    }
+
+    /**
+     * Scope a query to only include has available stock status.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeHasAvailableStock($query)
+    {
+        return $query->where('available_quantity', '>=', 0);
+    }
+
+    /**
+     * Scope a query to only include no available stock status.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNoAvailableStock($query)
+    {
+        return $query->where('available_quantity', '==', 0);
     }
 }

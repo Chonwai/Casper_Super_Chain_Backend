@@ -33,4 +33,22 @@ class ModelRelationsUtils
         }
         return $model;
     }
+
+    public static function OrderRelations($model)
+    {
+        $model->creator = $model->creator;
+        $model->creator = $model->creator;
+        $model->items = $model->items;
+        return $model;
+    }
+
+    public static function OrderListRelations($model)
+    {
+        foreach ($model as $object) {
+            $object->creator = $object->creator;
+            $object->creator = $object->creator;
+            $model->items = $model->items;
+        }
+        return $model;
+    }
 }
