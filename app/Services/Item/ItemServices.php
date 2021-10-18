@@ -41,6 +41,7 @@ class ItemServices
         $item = new Items($request->all());
         $item->id = Utils::generateUUID();
         $item->provider_id = $request->id;
+        $item->available_quantity = $request->storage_quantity;
 
         try {
             $item->save();

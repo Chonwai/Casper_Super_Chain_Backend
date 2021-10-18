@@ -28,7 +28,7 @@ class NewItemRequest extends FormRequest
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric|gte:0',
-            'amount' => 'required|numeric|gte:0',
+            'storage_quantity' => 'required|numeric|gte:0',
             'product_code' => 'nullable',
         ];
     }
