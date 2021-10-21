@@ -14,6 +14,7 @@
         "jiannei/laravel-response": "^1.7",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
+        "predis/predis": "^1.1",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
