@@ -4,7 +4,7 @@ namespace App\Http\Requests\Message;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddNewMessageRequest extends FormRequest
+class MessageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,7 +21,7 @@ class AddNewMessageRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public static function rules()
     {
         return [
             //

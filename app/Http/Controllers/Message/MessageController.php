@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Message;
 
+use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
+use App\Templates\Flows\MessageTemplate;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -25,7 +27,10 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $flow = new MessageTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'store');
+        event(new SendMessage($request));
+        return $res;
     }
 
     /**

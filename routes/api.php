@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\MarketingRegisterController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Follow\FollowController;
 use App\Http\Controllers\Item\ItemController;
+use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Order\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -102,5 +103,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          */
         // Add New Order
         Route::post('/order', [OrderController::class, 'store']);
+
+        /**
+         * Message API ------------------------------------------------------------
+         *
+         * @api
+         */
+        // Add New Message
+        Route::post('/message', [MessageController::class, 'store']);
     });
 });
