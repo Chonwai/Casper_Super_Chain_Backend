@@ -67,4 +67,20 @@ class ModelRelationsUtils
         }
         return $model;
     }
+
+    public static function RoomUsersRelations($model)
+    {
+        $model->room = $model->room;
+        $model->member = $model->member;
+        return $model;
+    }
+
+    public static function RoomUsersListRelations($model)
+    {
+        foreach ($model as $object) {
+            $object->room = $object->room;
+            $object->member = $object->member;
+        }
+        return $model;
+    }
 }

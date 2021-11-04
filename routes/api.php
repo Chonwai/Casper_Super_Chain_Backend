@@ -7,6 +7,7 @@ use App\Http\Controllers\Follow\FollowController;
 use App\Http\Controllers\Item\ItemController;
 use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Room\RoomUsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -114,5 +115,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
         // Get Messages By Room ID API
         Route::get('/message/room/{id}', [MessageController::class, 'showRoomMessage']);
+
+        /**
+         * Room API ------------------------------------------------------------
+         *
+         * @api
+         */
+        // Get the Room Member API
+        Route::get('/room/{id}/member', [RoomUsersController::class, 'show']);
     });
 });

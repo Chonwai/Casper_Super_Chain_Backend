@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Message;
+namespace App\Http\Controllers\Room;
 
-use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
-use App\Templates\Flows\MessageTemplate;
+use App\Templates\Flows\RoomUsersTemplate;
 use Illuminate\Http\Request;
 
-class MessageController extends Controller
+class RoomUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,32 +26,20 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        $flow = new MessageTemplate();
-        $res = $flow->takeFlow($request, 'JsonResource', 'store');
-        return $res;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
         //
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showRoomMessage(Request $request, $id)
+    public function show(Request $request, $id)
     {
-        $flow = new MessageTemplate();
-        $res = $flow->takeFlow($request, 'Collection', 'showRoomMessage');
+        $flow = new RoomUsersTemplate();
+        $res = $flow->takeFlow($request, 'JsonResource', 'show');
         return $res;
     }
 

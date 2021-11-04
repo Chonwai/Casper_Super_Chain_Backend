@@ -58,6 +58,6 @@ class RoomUsers extends Model
      */
     public function member()
     {
-        return $this->belongsTo(Rooms::class, 'room_id', 'id');
+        return $this->hasMany(Users::class, 'id', 'user_id');
     }
 }
