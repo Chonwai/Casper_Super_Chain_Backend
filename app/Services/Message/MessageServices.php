@@ -2,6 +2,7 @@
 
 namespace App\Services\Message;
 
+use App\Events\SendMessage;
 use App\Models\Messages;
 use App\Models\Rooms;
 use App\Utils\JWTUtils;
@@ -48,6 +49,7 @@ class MessageServices
                     $room = Rooms::where('id', $message->room_id)->first();
                     $room->last_message_id = $message->id;
                     $room->save();
+                    event(new SendMessage($request));
                     return $message;
                 } else {
                     DB::rollBack();

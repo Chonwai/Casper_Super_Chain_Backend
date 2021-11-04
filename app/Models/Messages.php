@@ -18,7 +18,7 @@ class Messages extends Model
      */
     protected $fillable = [
         'id',
-        'follow_id',
+        'room_id',
         'sender_id',
         'recipient_id',
         'content',

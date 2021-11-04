@@ -29,7 +29,6 @@ class MessageController extends Controller
     {
         $flow = new MessageTemplate();
         $res = $flow->takeFlow($request, 'JsonResource', 'store');
-        event(new SendMessage($request));
         return $res;
     }
 
