@@ -4,6 +4,7 @@ namespace App\Templates\Flows;
 
 use App\Http\Requests\Message\MessageRequest;
 use App\Http\Requests\Message\NewMessageRequest;
+use App\Http\Requests\Message\ShowRoomMessageRequest;
 use App\Http\Requests\Order\NewOrderRequest;
 use App\Http\Requests\Order\OrderRequest;
 use App\Http\Resources\NormalCollection;
@@ -33,6 +34,10 @@ class MessageTemplate extends FlowTemplate
                 $validator = Validator::make(array_merge($request->all(), ['sender_id' => JWTUtils::getUserID()]), NewMessageRequest::rules());
                 return $validator;
                 break;
+            case 'showRoomMessage':
+                $validator = Validator::make(array_merge($request->all(), ['room_id' => $request->id]), ShowRoomMessageRequest::rules());
+                return $validator;
+                break;
             default:
                 $validator = Validator::make($request->all(), []);
                 return $validator;
@@ -49,6 +54,10 @@ class MessageTemplate extends FlowTemplate
                 break;
             case 'store':
                 $data = MessageServices::getInstance()->store($request);
+                return $data;
+                break;
+            case 'showRoomMessage':
+                $data = MessageServices::getInstance()->showRoomMessage($request);
                 return $data;
                 break;
             default:

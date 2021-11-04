@@ -6,6 +6,7 @@ use App\Events\SendMessage;
 use App\Models\Messages;
 use App\Models\Rooms;
 use App\Utils\JWTUtils;
+use App\Utils\ModelRelationsUtils;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -62,5 +63,17 @@ class MessageServices
         });
 
         return $res;
+    }
+
+    public function showRoomMessage(Request $request)
+    {
+        $message = Messages::where('room_id', $request->id)->paginate(15);
+
+        if ($message) {
+            $message = ModelRelationsUtils::MessageListRelations($message);
+            return $message;
+        } else {
+            return ['error' => 'Get self items failed!'];
+        }
     }
 }

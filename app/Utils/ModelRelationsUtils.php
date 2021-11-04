@@ -47,7 +47,23 @@ class ModelRelationsUtils
         foreach ($model as $object) {
             $object->creator = $object->creator;
             $object->creator = $object->creator;
-            $model->items = $model->items;
+            $object->items = $object->items;
+        }
+        return $model;
+    }
+
+    public static function MessageRelations($model)
+    {
+        $model->sender = $model->sender;
+        $model->recipient = $model->recipient;
+        return $model;
+    }
+
+    public static function MessageListRelations($model)
+    {
+        foreach ($model as $object) {
+            $object->sender = $object->sender;
+            $object->recipient = $object->recipient;
         }
         return $model;
     }

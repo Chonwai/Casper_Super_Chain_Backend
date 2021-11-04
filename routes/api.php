@@ -56,10 +56,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          *
          * @api
          */
-        // Get the Friends List
+        // Get the Friends List API
         Route::get('/user/follow', [FollowController::class, 'showUserFriend']);
     
-        // Get the Items List
+        // Get the Items List API
         Route::get('/user/items', [ItemController::class, 'showSelfItem']);
 
         /**
@@ -73,10 +73,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         // Send Follow Request API
         Route::put('/user/follow/accept', [FollowController::class, 'update']);
 
-        // Get the Follow Request List
+        // Get the Follow Request List API
         Route::get('/user/follow/request', [FollowController::class, 'showFollowRequest']);
 
-        // Get the Last 7 Days Follow Accepted List
+        // Get the Last 7 Days Follow Accepted List API
         Route::get('/user/follow/accept', [FollowController::class, 'showFollowAccepted']);
 
         /**
@@ -84,16 +84,16 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          *
          * @api
          */
-        // Add New Item
+        // Add New Item API
         Route::post('/item', [ItemController::class, 'store']);
 
-        // Get the Specific Item
+        // Get the Specific Item API
         Route::get('/item/{id}', [ItemController::class, 'show']);
 
-        // Update the Item
+        // Update the Item API
         Route::put('/item/{id}', [ItemController::class, 'update']);
 
-        // Delete the Item
+        // Delete the Item API
         Route::delete('/item/{id}', [ItemController::class, 'destroy']);
 
         /**
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          *
          * @api
          */
-        // Add New Order
+        // Add New Order API
         Route::post('/order', [OrderController::class, 'store']);
 
         /**
@@ -109,7 +109,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
          *
          * @api
          */
-        // Add New Message
+        // Add New Message API
         Route::post('/message', [MessageController::class, 'store']);
+
+        // Get Messages By Room ID API
+        Route::get('/message/room/{id}', [MessageController::class, 'showRoomMessage']);
     });
 });
