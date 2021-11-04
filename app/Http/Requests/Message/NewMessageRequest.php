@@ -4,6 +4,7 @@ namespace App\Http\Requests\Message;
 
 use App\Rules\Message\CorrectRoomRule;
 use App\Rules\Message\MessageTypeRule;
+use App\Rules\Message\RecipientRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewMessageRequest extends FormRequest
@@ -28,7 +29,7 @@ class NewMessageRequest extends FormRequest
         return [
             'room_id' => ['required', 'exists:rooms,id', new CorrectRoomRule],
             'sender_id' => 'required|exists:users,id',
-            'recipient_id' => 'required|exists:users,id',
+            'recipient_id' => ['required', 'exists:users,id', new RecipientRule],
             'content' => 'required',
             'message_type' => ['required', new MessageTypeRule],
         ];
