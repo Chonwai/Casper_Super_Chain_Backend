@@ -32,13 +32,13 @@ class RefreshTokenMiddleware extends BaseMiddleware
         } catch (TokenExpiredException $exception) {
             try {
                 $token = $this->auth->refresh();
-                Auth::guard('auth')->onceUsingId($this->auth->manager()->getPayloadFactory()->buildClaimsCollection()->toPlainArray()['sub']);
+                echo($token);
+                Auth::guard('api')->onceUsingId($this->auth->manager()->getPayloadFactory()->buildClaimsCollection()->toPlainArray()['sub']);
             } catch (JWTException $exception) {
                 throw new UnauthorizedHttpException('jwt-auth', $exception->getMessage());
             }
         }
         
         return $this->setAuthenticationHeader($next($request), $token);
-        // return $next($request);
     }
 }

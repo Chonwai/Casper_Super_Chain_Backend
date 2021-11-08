@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class Handler extends ExceptionHandler
 {
@@ -65,6 +67,10 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof HttpException) {
             return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 400, $errors = $exception->getMessage());
+        }
+
+        if ($exception instanceof TokenBlacklistedException) {
+            return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 422, $errors = $exception->getMessage());
         }
 
         return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 500, $errors = 'Unexpected Exception. Try later');
