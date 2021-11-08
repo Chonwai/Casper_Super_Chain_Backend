@@ -41,7 +41,7 @@ class AuthServices
             return ['error' => 'Unauthorized'];
         } else {
             $user = JWTAuth::user();
-            $user->token = Utils::respondWithToken($token);
+            // $user->token = Utils::respondWithToken($token);
             return $user;
         }
     }

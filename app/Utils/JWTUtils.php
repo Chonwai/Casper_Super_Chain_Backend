@@ -11,6 +11,11 @@ class JWTUtils
         return JWTAuth::getToken();
     }
 
+    public static function getTokenFromUser($user)
+    {
+        return JWTAuth::fromUser($user);
+    }
+
     public static function getPayload($token)
     {
         return JWTAuth::getPayload($token);

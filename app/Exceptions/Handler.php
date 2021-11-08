@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 use Jiannei\Response\Laravel\Support\Traits\ExceptionTrait;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -39,28 +42,31 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            // 
+        $this->reportable(function (Throwable $exception) {
+            //
+        });
+
+        $this->renderable(function (Throwable $exception) {
+            $response = $this->handleException($exception);
+            return $response;
         });
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    // public function render($request, Exception $exception)
-    // {
-    //     // return parent::render($request, $exception);
-    //     if ($exception->getMessage() == '') {
-    //         // $res = Utils::integradeResponseMessage(ResponseUtils::APINoFound(), false);
-    //         return Response::fail($message = 'API No Found', $code = 404, $errors = '');
-    //     } else {
-    //         return Response::fail($message = 'Something Wrong', $code = 401, $errors = $exception->getMessage());
-    //     }
-    // }
+    public function handleException(Exception $exception)
+    {
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 405, $errors = 'The specified method for the request is invalid.');
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 404, $errors = 'The specified URL cannot be found.');
+        }
+
+        if ($exception instanceof HttpException) {
+            return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 400, $errors = $exception->getMessage());
+        }
+
+        return Response::fail($message = $exception->getMessage(), $code = $exception->getCode() ?: 500, $errors = 'Unexpected Exception. Try later');
+    }
 }

@@ -15,6 +15,7 @@ use App\Templates\FlowTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jiannei\Response\Laravel\Support\Facades\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FollowTemplate extends FlowTemplate
 {

@@ -50,7 +50,7 @@ Route::prefix('/v1')->group(function () {
     Route::get('/order/all', [OrderController::class, 'index']);
 });
 
-Route::group(['middleware' => ['jwt.auth']], function () {
+Route::group(['middleware' => ['api.refresh']], function () {
     Route::prefix('/v1')->group(function () {
         /**
          * User API ------------------------------------------------------------
